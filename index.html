@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartillas de Estudio - Servicios Web y Microservicios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f3f4f6;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            color: #6b7280;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #374151;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab:hover {
+            background-color: #f9fafb;
+            transform: translateY(-1px);
+        }
+
+        .nav-tab.active {
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-tab.blue { background-color: #3b82f6; }
+        .nav-tab.green { background-color: #10b981; }
+        .nav-tab.purple { background-color: #8b5cf6; }
+        .nav-tab.red { background-color: #ef4444; }
+        .nav-tab.orange { background-color: #f97316; }
+        .nav-tab.indigo { background-color: #6366f1; }
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: currentColor;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .card.active {
+            display: block;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+        }
+
+        .card-icon.blue { background-color: #3b82f6; }
+        .card-icon.green { background-color: #10b981; }
+        .card-icon.purple { background-color: #8b5cf6; }
+        .card-icon.red { background-color: #ef4444; }
+        .card-icon.orange { background-color: #f97316; }
+        .card-icon.indigo { background-color: #6366f1; }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .sections {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .section {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: white;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .section-header:hover {
+            background-color: #f9fafb;
+        }
+
+        .section-info h3 {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-info p {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .chevron {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #6b7280;
+            transition: transform 0.2s;
+        }
+
+        .section.expanded .chevron {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 0 1rem 1rem 1rem;
+            display: none;
+        }
+
+        .section.expanded .section-content {
+            display: block;
+        }
+
+        .details-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .details-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .bullet {
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: #3b82f6;
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .chart {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .chart-label {
+            width: 8rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            flex-shrink: 0;
+        }
+
+        .chart-bar-container {
+            flex: 1;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            height: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar {
+            height: 100%;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            border-radius: 9999px;
+            transition: width 1s ease-out;
+        }
+
+        .chart-value {
+            width: 3rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: #1f2937;
+            text-align: right;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #1f2937;
+            color: white;
+            border-radius: 0.5rem;
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-tab span {
+                display: none;
+            }
+
+            .chart-label {
+                width: 6rem;
+                font-size: 0.75rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📚 Cartillas de Estudio</h1>
+            <p>Servicios Web, Microservicios y Seguridad</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <button class="nav-tab active blue" onclick="showCard(0)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 7V17a2 2 0 002 2h14a2 2 0 002-2V7M3 7l9 6 9-6M3 7l9-6 9 6"/>
+                </svg>
+                <span>Servicios Web</span>
+            </button>
+            <button class="nav-tab green" onclick="showCard(1)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                </svg>
+                <span>Microservicios</span>
+            </button>
+            <button class="nav-tab purple" onclick="showCard(2)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+                <span>Tecnologías</span>
+            </button>
+            <button class="nav-tab red" onclick="showCard(3)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Seguridad</span>
+            </button>
+            <button class="nav-tab orange" onclick="showCard(4)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                <span>Desafíos</span>
+            </button>
+            <button class="nav-tab indigo" onclick="showCard(5)">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+                </svg>
+                <span>Tendencias</span>
+            </button>
+        </div>
+
+        <!-- Card 0: Servicios Web -->
+        <div class="card active" id="card-0">
+            <div class="card-header">
+                <div class="card-icon blue">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 7V17a2 2 0 002 2h14a2 2 0 002-2V7M3 7l9 6 9-6M3 7l9-6 9 6"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Servicios Web - Conceptos Fundamentales</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>¿Qué son los Servicios Web?</h3>
+                            <p>Aplicaciones modulares que se comunican a través de internet</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Permiten la interoperabilidad entre sistemas</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Utilizan protocolos estándar de internet (XML, HTTP)</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Facilitan la integración de aplicaciones distribuidas</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Tipos de Servicios Web</h3>
+                            <p>SOAP, RESTful y gRPC</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>SOAP: Protocolo más formal y estructurado</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>RESTful: Más ligero y fácil de implementar</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>gRPC: Alta eficiencia para comunicación entre servicios</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Características Principales</h3>
+                            <p>Interoperabilidad, descubrimiento dinámico y escalabilidad</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Interoperabilidad: Comunicación entre diferentes sistemas y tecnologías</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Descubrimiento dinámico: Utilizan estándares como UDDI</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Escalabilidad: Manejan gran volumen de solicitudes</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Seguridad -->
+        <div class="card" id="card-3">
+            <div class="card-header">
+                <div class="card-icon red">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Seguridad en Aplicaciones Web</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Métodos de Autenticación</h3>
+                            <p>Basic, Digest, Form, Client-Cert</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Basic: Método más inseguro. Usuario y contraseña en cabecera</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Digest: Similar a Basic pero con contraseña encriptada</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Form: Formulario con datos enviados por POST/GET (falta encriptación)</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Client-Cert: Certificados digitales para establecer comunicación</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Principales Vulnerabilidades</h3>
+                            <p>Inyección SQL, XSS, pérdida de autenticación</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Fallos de Inyección: SQL, OS, LDAP - datos no confiables ejecutan comandos no intencionados</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>XSS: Datos no confiables enviados al navegador sin validación apropiada</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Pérdida de Autenticación: Credenciales y tokens de sesión no protegidos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Referencia Insegura a Objetos: Exposición de referencias internas sin autorización</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Principios de Seguridad</h3>
+                            <p>CIA + Autenticidad + Trazabilidad</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Confidencialidad: Información no revelada a individuos no autorizados</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Integridad: La información no ha sido alterada de manera no autorizada</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Disponibilidad: Acceso autorizado cuando se requiere</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Autenticidad: Garantiza la fuente de la que proceden los datos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Trazabilidad: Las actuaciones pueden ser imputadas exclusivamente a una entidad</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Desafíos -->
+        <div class="card" id="card-4">
+            <div class="card-header">
+                <div class="card-icon orange">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Desafíos y Consideraciones</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Escalabilidad y Disponibilidad</h3>
+                            <p>Balance de carga, consistencia, tolerancia a fallos</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Balance de carga y escalabilidad horizontal para garantizar disponibilidad</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Consistencia y sincronización son desafíos importantes en entornos distribuidos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Tolerancia a fallos y recuperación independiente de microservicios</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Monitoreo y diagnóstico fundamentales para detectar y resolver problemas</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Seguridad y Control de Acceso</h3>
+                            <p>Autenticación robusta, gestión de secretos</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Mecanismos robustos de autenticación y autorización para proteger servicios</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión segura de credenciales, secretos y cifrado de datos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Medidas proactivas para prevenir inyección de código y denegación de servicio</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Cumplimiento normativo con enfoque riguroso en control de acceso</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Gestión de Versiones y Despliegue</h3>
+                            <p>Control de versiones, despliegue continuo</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Control sólido de versiones para garantizar coexistencia de múltiples versiones</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Automatización del despliegue e integración continua</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión eficiente de entornos de desarrollo, pruebas y producción</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Mecanismos de rollback y reversión esenciales para mitigar problemas</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: Tendencias -->
+        <div class="card" id="card-5">
+            <div class="card-header">
+                <div class="card-icon indigo">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Tendencias Futuras</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Eficiencia en el Desarrollo</h3>
+                            <p>Serverless, contenedores, automatización</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Arquitecturas sin servidor y contenedores para escalabilidad eficiente</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Automatización de pruebas y despliegue para calidad y rapidez</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión de versiones y despliegue continuo para optimizar ciclo de vida</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Monitorización y observabilidad fundamentales para rendimiento</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Seguridad Avanzada</h3>
+                            <p>Autenticación robusta, gestión centralizada</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Mecanismos sólidos de autenticación y autorización robustas</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión centralizada de secretos para confidencialidad de información</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Protección contra ataques y prevención de vulnerabilidades</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Cumplimiento normativo para asegurar integridad de servicios</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Arquitecturas Orientadas a Eventos</h3>
+                            <p>Procesamiento en tiempo real, mensajería asíncrona</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Procesamiento de eventos en tiempo real para toma de decisiones ágil</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Patrones de mensajería asíncrona para desacoplar componentes</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión de flujos de eventos y enriquecimiento de datos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Escalabilidad elástica basada en eventos según demanda de procesamiento</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart">
+            <h3>📊 Tendencias de Popularidad en Tecnologías</h3>
+            <div class="chart-items">
+                <div class="chart-item">
+                    <div class="chart-label">Contenedores Docker</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 85%;"></div>
+                    </div>
+                    <div class="chart-value">85%</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Serverless</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 80%;"></div>
+                    </div>
+                    <div class="chart-value">80%</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Kubernetes</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 75%;"></div>
+                    </div>
+                    <div class="chart-value">75%</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">Micro-Frontend</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 70%;"></div>
+                    </div>
+                    <div class="chart-value">70%</div>
+                </div>
+                <div class="chart-item">
+                    <div class="chart-label">API Gateway</div>
+                    <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 65%;"></div>
+                    </div>
+                    <div class="chart-value">65%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>💡 Haz clic en las secciones para expandir el contenido y estudiar en detalle</p>
+        </div>
+    </div>
+
+    <script>
+        function showCard(cardIndex) {
+            // Ocultar todas las cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => card.classList.remove('active'));
+            
+            // Mostrar la card seleccionada
+            document.getElementById(`card-${cardIndex}`).classList.add('active');
+            
+            // Actualizar botones de navegación
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabs[cardIndex].classList.add('active');
+        }
+
+        function toggleSection(sectionHeader) {
+            const section = sectionHeader.parentElement;
+            section.classList.toggle('expanded');
+        }
+
+        // Animación de las barras del gráfico
+        window.addEventListener('load', function() {
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.width = bar.style.width;
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
+
+        <!-- Card 1: Microservicios -->
+        <div class="card" id="card-1">
+            <div class="card-header">
+                <div class="card-icon green">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Arquitectura de Microservicios</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Escalabilidad</h3>
+                            <p>Dinámica, independiente y elástica</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Dinámica: Escalar de forma dinámica y granular sin afectar rendimiento</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Independiente: Cada microservicio escala de forma independiente</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Elástica: Adaptación automática a los cambios en la demanda</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Flexibilidad y Agilidad</h3>
+                            <p>Despliegue independiente y tecnologías variadas</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Despliegue independiente: Agiliza procesos de desarrollo, pruebas y actualizaciones</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Tecnologías variadas: Cada microservicio puede utilizar diferentes tecnologías</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Mejora continua: Permite iteraciones ágiles y adaptación a cambios del mercado</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Resiliencia</h3>
+                            <p>Aislamiento de fallos y recuperación rápida</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Aislamiento: Los microservicios están diseñados para ser independientes</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Tolerancia a fallos: Un fallo en un microservicio no afecta al sistema completo</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Recuperación rápida: Facilitan la recuperación rápida ante fallos</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Tecnologías -->
+        <div class="card" id="card-2">
+            <div class="card-header">
+                <div class="card-icon purple">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                    </svg>
+                </div>
+                <h2 class="card-title">Tecnologías Comunes</h2>
+            </div>
+            <div class="sections">
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Tecnologías para la Comunicación</h3>
+                            <p>HTTP, REST, gRPC, RabbitMQ, Kafka</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Protocolos de comunicación: HTTP, REST y gRPC para comunicación entre componentes</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Mensajería asíncrona: RabbitMQ o Kafka, fundamental para comunicación eficiente</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Middleware de integración: Apache Camel o MuleSoft para facilitar integración</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Tecnologías para la Gestión de Datos</h3>
+                            <p>NoSQL, Cache distribuida, Event sourcing</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Bases de datos NoSQL: MongoDB o Cassandra para gestión de datos distribuidos</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Cache distribuida: Redis o Memcached para optimizar rendimiento</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Event sourcing y CQRS: Técnicas para gestión eficiente de eventos</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section">
+                    <button class="section-header" onclick="toggleSection(this)">
+                        <div class="section-info">
+                            <h3>Tecnologías para Seguridad y Monitorización</h3>
+                            <p>OAuth, JWT, Prometheus, Grafana</p>
+                        </div>
+                        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <div class="section-content">
+                        <ul class="details-list">
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Seguridad a nivel de API: OAuth, JWT y otras tecnologías esenciales</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Monitorización distribuida: Prometheus o Grafana para análisis de salud</span>
+                            </li>
+                            <li class="details-item">
+                                <span class="bullet"></span>
+                                <span>Gestión de logs y trazabilidad: ELK Stack o Splunk para gestión centralizada</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
